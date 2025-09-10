@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Brújula Interior</title>
+    <img src="logo_cobatab_portal.PNG">
+    <img src="cobachito2.gif">  
+    <style>
+     body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e3f2fd; /* Azul muy claro */
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 4em;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 650px;
+            width: 90%;
+            transition: all 0.5s ease-in-out;
+            border: 1px solid #bbdefb;
+        }
+
+        h1 {
+            color: #1565c0; /* Azul oscuro */
+            font-size: 3.5em;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.5em;
+        }
+
+        button {
+            background-color: #42a5f5; /* Azul claro */
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1.5em;
+        }
+
+        button:hover {
+            background-color: #1e88e5; /* Azul más oscuro al pasar el ratón */
+        }
+
+        .question-box, .message-box {
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        textarea {
+            width: 90%;
+            height: 100px;
+            padding: 1em;
+            border-radius: 10px;
+            border: 2px solid #bbdefb;
+            resize: none;
+            font-size: 1.5em;
+            margin-top: 1.5em;
+        }
+
+        .resources-section {
+            margin-top: 4em;
+            background-color: #fce4ec; /* Rosa claro */
+            padding: 3em;
+            border-radius: 15px;
+            border: 1px solid #f8bbd0;
+        }
+
+        .resources-section a {
+            color: #d81b60; /* Rojo vibrante */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .resources-section a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="welcome-section">
+        <h1>Tu Brújula Interior</h1>
+        <p>Un espacio seguro para la reflexión y el apoyo diario. Tómate un momento para ti mismo y encuentra tu mensaje de hoy.</p>
+        <button id="start-button">Comienza tu momento de reflexión</button>
+        <p style="margin-top: 2em; font-size: 0.9em; color: #777;"><strong>Aviso importante:</strong> Este sitio es una herramienta de apoyo, no un sustituto de la ayuda profesional. Si te sientes en crisis, busca ayuda inmediata.</p>
+    </div>
+
+    <div class="container question-box" id="question-section">
+        <h2>Reflexión del día</h2>
+        <p id="daily-question"></p>
+        <textarea id="user-response" placeholder="Tómate un momento para reflexionar y escribe tu respuesta aquí..." rows="4"></textarea>
+        <br>
+        <button id="submit-button">Ver mi mensaje</button>
+    </div>
+
+    <div class="container message-box" id="message-section">
+        <h2 id="message-heading"></h2>
+        <p id="daily-message"></p>
+        <button id="reset-button">Volver al inicio</button>
+    </div>
+    
+    <div class="container resources-section">
+        <h3>¿Necesitas hablar con alguien ahora?</h3>
+        <p>Líneas de ayuda inmediata disponibles las 24 horas:</p>
+        <p><strong>México Tel:</strong> <a href="https://cms311.cdmx.gob.mx/prevencion-suicidio/">0311 </a>  Línea de prevención del Suicidio</p>
+        <p><strong>Línea de Vida:</strong> <a href="tel:8009112000">800-911-2000</a></p>
+        <p><strong>Línea de Emergencia:</strong> <a href="tel:911">911</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('start-button');
+            const submitButton = document.getElementById('submit-button');
+            const resetButton = document.getElementById('reset-button');
+
+            const welcomeSection = document.getElementById('welcome-section');
+            const questionSection = document.getElementById('question-section');
+            const messageSection = document.getElementById('message-section');
+            
+            const dailyQuestionElement = document.getElementById('daily-question');
+            const dailyMessageElement = document.getElementById('daily-message');
+            const messageHeadingElement = document.getElementById('message-heading');
+            
+            const userResponseTextarea = document.getElementById('user-response');
+
+            const questions = [
+                "¿Escribe un pequeño logro que tuviste hoy, por simple que parezca?",
+                "Nombra algo que te hizo sonreír el día de hoy.",
+                "Si pudieras darle un consejo a tu yo de hace un año, ¿qué le dirías?",
+                "¿Escribe una cosa de la que te sientes orgulloso en este momento?",
+                "¿Escribe algo que has aprendido recientemente, sin importar cuán pequeño sea el dato?",
+                "Describe un momento en el que te sentiste realmente vivo y presente.",
+                "Si pudieras hablar con alguien que te quiere, ¿qué le dirías sobre cómo te sientes hoy?",
+                "¿Cuál es un pequeño paso que puedes dar hoy para acercarte a lo que quieres?",
+                "¿Escribe algo que te hace sentir seguro y en paz?",
+                "¿Escribe una cosa por la que estás agradecido en este momento?"
+            ];
+
+            const messages = [
+                "¡Cada paso, por pequeño que sea, es una victoria! Celebrar tus logros te da la fuerza para seguir adelante.",
+                "Buscar y encontrar la alegría en las cosas simples te ayuda a apreciar el presente. Hoy hiciste eso, y eso es maravilloso.",
+                "Tu viaje te ha hecho más fuerte y sabio. Sé amable contigo mismo; has crecido más de lo que crees.",
+                "Estar orgulloso de ti mismo es un acto de amor propio. Sigue construyendo esa confianza, porque eres digno de ella.",
+                "El crecimiento es un proceso constante. Cada lección, grande o pequeña, te hace una persona más completa y fuerte.",
+                "Conectar con el presente y tus sentidos es un regalo. Esos momentos de paz te recuerdan la belleza de la vida.",
+                "La conexión es vital. Abrirte a alguien que te quiere te recuerda que no estás solo y que hay gente dispuesta a apoyarte.",
+                "No tienes que verlo todo el camino, solo tienes que dar el primer paso. El coraje no es la ausencia del miedo, sino la decisión de actuar a pesar de él.",
+                "Encuentra tu ancla. Rodéate de las cosas y personas que te hacen sentir seguro. Ese es tu santuario interior.",
+                "La gratitud abre tu corazón a la belleza de lo que ya tienes. Apreciar lo bueno te da la perspectiva necesaria para enfrentar lo malo."
+            ];
+
+            startButton.addEventListener('click', () => {
+                welcomeSection.style.display = 'none';
+                questionSection.style.display = 'block';
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                dailyQuestionElement.textContent = questions[randomIndex];
+            });
+
+            submitButton.addEventListener('click', () => {
+                questionSection.style.display = 'none';
+                messageSection.style.display = 'block';
+                const randomIndex = Math.floor(Math.random() * messages.length);
+                messageHeadingElement.textContent = "Tu mensaje de hoy";
+                dailyMessageElement.textContent = messages[randomIndex];
+                userResponseTextarea.value = '';
+            });
+
+            resetButton.addEventListener('click', () => {
+                messageSection.style.display = 'none';
+                welcomeSection.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
